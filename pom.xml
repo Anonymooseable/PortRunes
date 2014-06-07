@@ -6,13 +6,36 @@
   <packaging>jar</packaging>
   <version>0.0.1</version>
   <name>PortRunes</name>
-  <url>http://maven.apache.org</url>
+  <url>http://sphalerite.org/portrunes/</url>
   <dependencies>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
+      <groupId>org.bukkit</groupId>
+      <artifactId>bukkit</artifactId>
+      <version>1.7.9-R0.1</version>
+      <type>jar</type>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
+  <repositories>
+       <repository>
+           <id>bukkit-repo</id>
+           <url>http://repo.bukkit.org/content/groups/public/</url>
+       </repository>
+   </repositories>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>

@@ -1,0 +1,3 @@
+name: PortRunes
+main: org.sphalerite.bukkit.plugins.PortRunesPlugin
+version: 0.0.1
