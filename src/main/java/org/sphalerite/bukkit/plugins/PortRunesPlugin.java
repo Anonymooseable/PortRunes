@@ -21,9 +21,11 @@ public class PortRunesPlugin extends JavaPlugin implements Listener {
 	private static int createTeleCost;
 	private static int useTeleCost;
 	
-	private Map<PortSignature, SerializableLocation> waypoints;
 	private static final File teleportersPath = new File("plugins/PortRunes/teleporters.dat");
 	private static final File waypointsPath = new File("plugins/PortRunes/waypoints.dat");
+	
+	private TeleporterStorage teleporters;
+	private WaypointStorage waypoints;
 
 	@Override
 	public void onEnable() {
@@ -32,30 +34,8 @@ public class PortRunesPlugin extends JavaPlugin implements Listener {
 		createTeleCost = getConfig().getInt("createTeleporterCost");
 		useTeleCost = getConfig().getInt("useTeleporterCost");
 		
-		loadTeleporters();
-		loadWaypoints();
-	}
-	
-	private void loadTeleporters() {
-		InputStreamReader reader;
-		char[] text = new char[(int) teleportersPath.length()];
-		try {
-			reader = new InputStreamReader(new FileInputStream(teleportersPath));
-		}
-		catch (FileNotFoundException e) {
-			getLogger().warning("Teleporters file not found.");
-			return;
-		}
-		try {
-			reader.read(text);
-		}
-		catch (IOException e) {
-			getLogger().warning("Could not read teleporters file.");
-			try {reader.close();} catch (IOException e1) {}
-			return;
-		}
-		
-		try {reader.close();} catch (IOException e) {}
+		teleporters = new TeleporterStorage(teleportersPath);
+		waypoints = new WaypointStorage(waypointsPath);
 	}
 	
 	@Override
