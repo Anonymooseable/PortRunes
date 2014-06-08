@@ -6,16 +6,18 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.HashMap;
 
 public class WaypointStorage {
-	private Map<PortSignature, Waypoint> waypoints;
-	
-	public WaypointStorage() {}
-	
+	private HashMap<PortSignature, Waypoint> waypoints;
+
+	public WaypointStorage() {
+		waypoints = new HashMap<PortSignature, Waypoint>();
+	}
+
 	private void failLoad() {
 		PortRunesPlugin.getInstance().getLogger().warning("Could not read waypoint storage file, proceeding with empty waypoint map");
+		waypoints = new HashMap<PortSignature, Waypoint>();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -23,7 +25,7 @@ public class WaypointStorage {
 		try {
 			FileInputStream in = new FileInputStream(f);
 			ObjectInputStream ostream = new ObjectInputStream(in);
-			waypoints = (Map<PortSignature, Waypoint>)ostream.readObject();
+			waypoints = (HashMap<PortSignature, Waypoint>)ostream.readObject();
 			ostream.close();
 			in.close();
 		} catch (IOException e) {
@@ -53,5 +55,12 @@ public class WaypointStorage {
 	
 	public void add(Waypoint w) {
 		waypoints.put(w.getSig(), w);
+	}
+
+	public Waypoint get(PortSignature sig) {
+		return waypoints.get(sig);
+	}
+	public void remove(PortSignature sig) {
+		waypoints.remove(sig);
 	}
 }

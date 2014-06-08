@@ -11,6 +11,6 @@ public class Teleporter extends PortRune {
 	public Teleporter(SerializableLocation location, PortSignature sig) {
 		super(location, sig);
 	}
-	protected final Material getOutsideBlock() {return Material.LAPIS_BLOCK;}
-	protected final Material getCentreBlock() {return Material.DIAMOND_BLOCK;}
+	protected final Material getOutsideBlock() {return Material.DIAMOND_BLOCK;}
+	protected final Material getCentreBlock() {return Material.REDSTONE_BLOCK;}
 }

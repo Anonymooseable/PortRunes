@@ -6,21 +6,26 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.bukkit.Location;
 
 public class TeleporterStorage {
-	private ArrayList<Teleporter> teleporters;
-	public TeleporterStorage() {}
-	
+	private HashMap<SerializableLocation, Teleporter> teleporters;
+	public TeleporterStorage() {
+		teleporters = new HashMap<SerializableLocation, Teleporter>();
+	}
+
 	private void failLoad() {
-		PortRunesPlugin.getInstance().getLogger().warning("Could not read teleporter storage file, proceeding with empty teleporter list");
+		PortRunesPlugin.getInstance().getLogger().warning("Could not read teleporter storage file, proceeding with no teleporters");
+		teleporters = new HashMap<SerializableLocation, Teleporter>();
 	}
 	@SuppressWarnings("unchecked")
 	public TeleporterStorage(File f) {
 		try {
 			FileInputStream in = new FileInputStream(f);
 			ObjectInputStream ostream = new ObjectInputStream(in);
-			teleporters = (ArrayList<Teleporter>)ostream.readObject();
+			teleporters = (HashMap<SerializableLocation, Teleporter>)ostream.readObject();
 			ostream.close();
 			in.close();
 		} catch (IOException e) {
@@ -28,7 +33,9 @@ public class TeleporterStorage {
 		} catch (ClassNotFoundException e) {
 			failLoad();
 		}
-		for (@SuppressWarnings("unused") Teleporter t : teleporters); // Check validity of list
+		// Check validity of map
+		for (@SuppressWarnings("unused") SerializableLocation l: teleporters.keySet());
+		for (@SuppressWarnings("unused") Teleporter t: teleporters.values());
 	}
 	
 	private void failSave() {
@@ -47,6 +54,15 @@ public class TeleporterStorage {
 	}
 	
 	public void add(Teleporter t) {
-		teleporters.add(t);
+		teleporters.put(t.getLocation(), t);
+	}
+	public Teleporter get(SerializableLocation l) {
+		return teleporters.get(l);
+	}
+	public Teleporter get(Location l) {
+		return teleporters.get(new SerializableLocation(l));
+	}
+	public void remove(SerializableLocation l) {
+		teleporters.remove(l);
 	}
 }

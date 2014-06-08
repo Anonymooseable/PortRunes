@@ -1,3 +1,7 @@
 PortRunes:
   createTeleporterCost: 30
   useTeleporterCost: 1
+  teleportDelay: 1
+  maxShunt: 3
+  slightlyGratuitousTeleporterDestruction: true
+  gratuitousTeleporterDestruction: false

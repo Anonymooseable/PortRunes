@@ -1,3 +1,8 @@
 name: PortRunes
 main: org.sphalerite.bukkit.plugins.PortRunesPlugin
-version: 0.0.1
+version: 0.1.0
+commands:
+    portrunes:
+        description: Perform actions with PortRunes objects.
+        usage: /portrunes (clear|list) [w[aypoints]|t[eleporters]]
+        permission: portrunes.portrunes
