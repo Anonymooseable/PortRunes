@@ -187,12 +187,19 @@ public class PortRunesPlugin extends JavaPlugin implements Listener {
 
 	private void tryActivateTeleporter(Player player, Teleporter t) {
 		Waypoint w = waypoints.get(t.getSig());
+		boolean activate = false;
 		if (w != null) {
 			if (!w.isValid()) {
 				waypoints.remove(w.getSig());
 			} else {
-				if (player.getLevel() >= createTeleCost || player.getGameMode() == GameMode.CREATIVE) {
+				if (player.getLevel() >= createTeleCost) {
 					player.setLevel(player.getLevel() - createTeleCost);
+					activate = true;
+				}
+				if (player.getGameMode() == GameMode.CREATIVE) {
+					activate = true;
+				}
+				if (activate) {
 					teleporters.add(t);
 					Block aboveCentre = t.getLocation().toLocation().add(0, 1, 0).getBlock();
 					if (aboveCentre.getType() == Material.AIR) {
